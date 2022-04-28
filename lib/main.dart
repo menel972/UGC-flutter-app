@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ugc/components/cinema/cinema_details_view.dart';
@@ -13,7 +14,9 @@ import 'home/home_view.dart';
 import 'models/cinema_model.dart';
 import 'utils/color.dart' as color;
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const UgcApp());
 }
 

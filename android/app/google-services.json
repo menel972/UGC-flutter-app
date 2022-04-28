@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "860804722276",
-    "project_id": "ugcapp-4d07f",
-    "storage_bucket": "ugcapp-4d07f.appspot.com"
+    "project_number": "175969259078",
+    "project_id": "ugc-app",
+    "storage_bucket": "ugc-app.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:860804722276:android:e31eb6cbc4d4fa8abff971",
+        "mobilesdk_app_id": "1:175969259078:android:ddba5953f6fc2204a7c447",
         "android_client_info": {
           "package_name": "com.example.ugc"
         }
       },
       "oauth_client": [
         {
-          "client_id": "860804722276-ft7il0ghulrv17dijgp82mkm99l670ab.apps.googleusercontent.com",
+          "client_id": "175969259078-i5ln7afiuproa59kgjr0lpsqbo00mao9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCRVKVpZbMEzsWJZtWQlqegRN3O-TVKqWo"
+          "current_key": "AIzaSyBmkpPZECCZA3dhDFf3CozTm8diRcFN2oM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "860804722276-ft7il0ghulrv17dijgp82mkm99l670ab.apps.googleusercontent.com",
+              "client_id": "175969259078-i5ln7afiuproa59kgjr0lpsqbo00mao9.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
