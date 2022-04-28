@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "860804722276",
+    "project_id": "ugcapp-4d07f",
+    "storage_bucket": "ugcapp-4d07f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860804722276:android:e31eb6cbc4d4fa8abff971",
+        "android_client_info": {
+          "package_name": "com.example.ugc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "860804722276-ft7il0ghulrv17dijgp82mkm99l670ab.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRVKVpZbMEzsWJZtWQlqegRN3O-TVKqWo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "860804722276-ft7il0ghulrv17dijgp82mkm99l670ab.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
