@@ -6,6 +6,7 @@ import 'views/details/film_details_view.dart';
 import 'services/models/film_model.dart';
 import 'services/providers/app_bar_provider.dart';
 import 'services/providers/cinemas_provider.dart';
+import 'services/providers/films_provider.dart';
 import 'services/providers/home_tabs_provider.dart';
 import 'services/providers/nav_bar_provider.dart';
 import 'views/home/home_view.dart';
@@ -44,6 +45,8 @@ class _UgcAppState extends State<UgcApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider.value(value: FilmsProvider()),
+        ChangeNotifierProvider.value(value: CinemasProvider()),
         ChangeNotifierProvider.value(value: NavBarProvider()),
         ChangeNotifierProvider.value(value: HomeTabsProvider()),
         ChangeNotifierProvider.value(value: AppBarProvider()),
