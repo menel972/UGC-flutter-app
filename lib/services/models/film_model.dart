@@ -29,6 +29,7 @@ class FilmModel {
     required this.programmation,
   });
 
+// {} Film // Json
   Map<String, dynamic> toJson(String docId) => {
         'id': docId,
         'titre': titre,
@@ -43,6 +44,7 @@ class FilmModel {
         'dateDeSortie': dateDeSortie,
         'programmation': programmation,
       };
+  // NOTE : Convert FilmModel to Json
 
   static FilmModel fromJson(Map<String, dynamic> json) => FilmModel(
         id: json['id'],
@@ -58,4 +60,11 @@ class FilmModel {
         dateDeSortie: json['dateDeSortie'],
         programmation: json['programmation'],
       );
+  // NOTE : Convert Json to FilmModel
+
+// {}
+  List<DateTime> todaySeance(FilmModel film) => film.programmation
+      .where((date) => (date.hour - DateTime.now().hour) < 0)
+      .toList();
+  // NOTE : Get programmation of the day
 }
