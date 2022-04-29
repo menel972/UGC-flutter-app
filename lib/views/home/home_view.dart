@@ -2,15 +2,15 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../services/providers/films_provider.dart';
+import '../../services/providers/films_provider.dart';
 import '../../services/models/cinema_model.dart';
 import '../../services/models/film_model.dart';
 import '../components/drawer_view.dart';
 import '../components/appbar_view.dart';
 import '../components/bottom_bar_view.dart';
 
-import '../services/providers/cinemas_provider.dart';
-import '../services/providers/home_tabs_provider.dart';
+import '../../services/providers/cinemas_provider.dart';
+import '../../services/providers/home_tabs_provider.dart';
 
 // <> HomeView()
 class HomeView extends StatefulWidget {

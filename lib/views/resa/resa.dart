@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ugc/home/home_view.dart';
+import 'package:ugc/views/home/home_view.dart';
 
 import '../../services/utils/color.dart' as color;
 

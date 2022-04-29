@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ugc/components/note.dart';
-import 'package:ugc/details/widgets/film_info.dart';
-import 'package:ugc/details/widgets/seance_picker.dart';
+import 'package:ugc/views/components/note.dart';
+import 'package:ugc/views/details/widgets/film_info.dart';
+import 'package:ugc/views/details/widgets/seance_picker.dart';
 import '../../services/models/film_model.dart';
-import '../services/providers/films_provider.dart';
+import '../../services/providers/films_provider.dart';
 
 import '../../services/utils/color.dart' as color;
 

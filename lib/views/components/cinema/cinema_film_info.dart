@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:ugc/details/film_details_view.dart';
-import '../../services/providers/films_provider.dart';
+import 'package:ugc/views/details/film_details_view.dart';
+import '../../../services/providers/films_provider.dart';
 import '../../components/label.dart';
 import '../../../services/models/film_model.dart';
 

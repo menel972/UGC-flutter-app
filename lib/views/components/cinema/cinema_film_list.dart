@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ugc/components/seance_card.dart';
-import '../../services/models/cinema_model.dart';
-import '../../services/models/film_model.dart';
-import '../../services/providers/films_provider.dart';
+import 'package:ugc/views/components/seance_card.dart';
+import '../../../services/models/cinema_model.dart';
+import '../../../services/models/film_model.dart';
+import '../../../services/providers/films_provider.dart';
 
 import 'cinema_film_info.dart';
 

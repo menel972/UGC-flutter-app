@@ -2,14 +2,14 @@ import 'dart:collection';
 
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
-import 'package:ugc/components/cinema/cinema_film_list.dart';
-import 'package:ugc/details/widgets/seance_list.dart';
+import 'package:ugc/views/components/cinema/cinema_film_list.dart';
+import 'package:ugc/views/details/widgets/seance_list.dart';
 import '../../services/models/film_model.dart';
 
-import '../../home/widgets/cinema_list.dart';
-import '../../home/widgets/film_list.dart';
+import '../../views/home/widgets/cinema_list.dart';
+import '../../views/home/widgets/film_list.dart';
 import '../../services/models/cinema_model.dart';
-import '../../resa/resa.dart';
+import '../../views/resa/resa.dart';
 import '../../services/utils/color.dart' as color;
 
 class TabsInfosModel {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ugc/components/cinema/film_picker.dart';
-import '../../services/models/cinema_model.dart';
+import 'package:ugc/views/components/cinema/film_picker.dart';
+import '../../../services/models/cinema_model.dart';
 
 // <> CinemaDetailsView()
 class CinemaDetailsView extends StatefulWidget {

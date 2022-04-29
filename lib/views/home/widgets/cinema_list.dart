@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ugc/components/cinema_card.dart';
+import 'package:ugc/views/components/cinema_card.dart';
 import '../../../services/models/cinema_model.dart';
 
 // <> CinemaList()

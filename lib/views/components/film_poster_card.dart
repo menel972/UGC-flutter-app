@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ugc/components/label.dart';
-import 'package:ugc/details/film_details_view.dart';
+import 'package:ugc/views/components/label.dart';
+import 'package:ugc/views/details/film_details_view.dart';
 import '../../services/models/film_model.dart';
 
 // <> FilmPosterCard()

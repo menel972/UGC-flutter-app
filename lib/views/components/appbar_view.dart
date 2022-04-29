@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../services/providers/app_bar_provider.dart';
-import '../services/providers/home_tabs_provider.dart';
+import '../../services/providers/app_bar_provider.dart';
+import '../../services/providers/home_tabs_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // <> AppbarView()

@@ -2,7 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../services/providers/nav_bar_provider.dart';
+import '../../services/providers/nav_bar_provider.dart';
 
 // <> BottomBarView()
 class BottomBarView extends StatelessWidget {
