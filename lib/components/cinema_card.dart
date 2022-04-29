@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../models/cinema_model.dart';
-import '../utils/color.dart' as color;
+import '../../services/models/cinema_model.dart';
+import '../../services/utils/color.dart' as color;
 import 'cinema/cinema_details_view.dart';
 
 // <> CinemaCard()

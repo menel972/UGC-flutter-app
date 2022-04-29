@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ugc/models/film_model.dart';
-import 'package:ugc/providers/home_tabs_provider.dart';
+import '../../../services/models/film_model.dart';
+import '../../services/providers/home_tabs_provider.dart';
 
-import '../../providers/films_provider.dart';
+import '../../services/providers/films_provider.dart';
 
 // <> SeancePicker()
 class SeancePicker extends StatelessWidget {

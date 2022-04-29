@@ -1,9 +1,9 @@
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
-import 'package:ugc/models/cinema_model.dart';
-import 'package:ugc/models/film_model.dart';
-import '../datas/films_datas.dart';
+import '../../services/models/cinema_model.dart';
+import '../../services/models/film_model.dart';
+import '../../datas/films_datas.dart';
 
 class FilmsProvider with ChangeNotifier {
   final List<FilmModel> _films = FilmsDatas.films;

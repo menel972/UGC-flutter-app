@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ugc/components/cinema_card.dart';
-import '../../models/cinema_model.dart';
+import '../../../services/models/cinema_model.dart';
 
 // <> CinemaList()
 class CinemaList extends StatelessWidget {

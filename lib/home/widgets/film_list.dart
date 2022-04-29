@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../components/film_poster_card.dart';
-import '../../models/film_model.dart';
+import '../../../services/models/film_model.dart';
 
 // <> FilmList()
 class FilmList extends StatelessWidget {

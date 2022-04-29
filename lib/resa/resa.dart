@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ugc/home/home_view.dart';
 
-import '../utils/color.dart' as color;
+import '../../services/utils/color.dart' as color;
 
 // <> Resa()
 class Resa extends StatelessWidget {

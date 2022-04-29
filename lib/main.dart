@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ugc/components/cinema/cinema_details_view.dart';
 import 'package:ugc/details/film_details_view.dart';
-import 'package:ugc/models/film_model.dart';
-import 'package:ugc/providers/app_bar_provider.dart';
-import 'package:ugc/providers/cinemas_provider.dart';
-import 'package:ugc/providers/films_provider.dart';
-import 'package:ugc/providers/home_tabs_provider.dart';
-import 'package:ugc/providers/nav_bar_provider.dart';
+import 'services/models/film_model.dart';
+import 'services/providers/app_bar_provider.dart';
+import 'services/providers/cinemas_provider.dart';
+import 'services/providers/films_provider.dart';
+import 'services/providers/home_tabs_provider.dart';
+import 'services/providers/nav_bar_provider.dart';
 import 'home/home_view.dart';
 
-import 'models/cinema_model.dart';
-import 'utils/color.dart' as color;
+import 'services/models/cinema_model.dart';
+import '../services/utils/color.dart' as color;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

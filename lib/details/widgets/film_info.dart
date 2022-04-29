@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ugc/components/note.dart';
 import '../../components/label.dart';
-import '../../models/film_model.dart';
+import '../../../services/models/film_model.dart';
 
-import '../../utils/color.dart' as color;
+import '../../../services/utils/color.dart' as color;
 
 // <> FilmInfo()
 class FilmInfo extends StatelessWidget {

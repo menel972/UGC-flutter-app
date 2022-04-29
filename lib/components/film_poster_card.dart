@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ugc/components/label.dart';
 import 'package:ugc/details/film_details_view.dart';
-import '../models/film_model.dart';
+import '../../services/models/film_model.dart';
 
 // <> FilmPosterCard()
 class FilmPosterCard extends StatelessWidget {

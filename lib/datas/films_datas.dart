@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/film_model.dart';
+import '../../services/models/film_model.dart';
 
 // <> FilmsDatas()
 class FilmsDatas extends InheritedWidget {

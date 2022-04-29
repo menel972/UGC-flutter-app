@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:ugc/details/film_details_view.dart';
-import 'package:ugc/providers/films_provider.dart';
+import '../../services/providers/films_provider.dart';
 import '../../components/label.dart';
-import '../../models/film_model.dart';
+import '../../../services/models/film_model.dart';
 
 // <> CinemaFilmInfo()
 class CinemaFilmInfo extends StatelessWidget {

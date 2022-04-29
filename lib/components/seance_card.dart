@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:ugc/models/film_model.dart';
+import '../../services/models/film_model.dart';
 
-import '../utils/color.dart' as color;
+import '../../services/utils/color.dart' as color;
 
 // <> SeanceCard()
 class SeanceCard extends StatelessWidget {

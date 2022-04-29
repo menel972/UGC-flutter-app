@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ugc/models/cinema_model.dart';
-import 'package:ugc/providers/home_tabs_provider.dart';
+import '../../services/models/cinema_model.dart';
+import '../../services/providers/home_tabs_provider.dart';
 
 // <> FilmPicker()
 class FilmPicker extends StatelessWidget {

@@ -3,10 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:ugc/components/note.dart';
 import 'package:ugc/details/widgets/film_info.dart';
 import 'package:ugc/details/widgets/seance_picker.dart';
-import 'package:ugc/models/film_model.dart';
-import 'package:ugc/providers/films_provider.dart';
+import '../../services/models/film_model.dart';
+import '../services/providers/films_provider.dart';
 
-import '../utils/color.dart' as color;
+import '../../services/utils/color.dart' as color;
 
 // <> FilmDetailsView()
 class FilmDetailsView extends StatefulWidget {
