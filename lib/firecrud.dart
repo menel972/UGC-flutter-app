@@ -1,16 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FireCrud {
-  static Future merge(Cine newCine) async {
+  static Future merge(Film newFilm) async {
     DocumentReference<Map<String, dynamic>> db =
         FirebaseFirestore.instance.collection('film').doc();
 
-    Map<String, dynamic> cineJson = newCine.toJson(db.id);
+    Map<String, dynamic> filmToJson = newFilm.toJson(db.id);
 
     await db
-        .set(cineJson)
+        .set(filmToJson)
         // ignore: avoid_print
-        .then((value) => print(newCine.nom + ' a été ajouté'))
+        .then((value) => print(newFilm.titre + ' a été ajouté'))
         // ignore: avoid_print
         .catchError((e) => print(e.toString()));
   }
@@ -81,5 +81,65 @@ class Cine {
         tarifs: json['tarifs'],
         films: json['films'],
         favori: json['favori'],
+      );
+}
+
+class Film {
+  final String id;
+  final String titre;
+  final String synopsis;
+  final String label;
+  final String langue;
+  final String affiche;
+  final List<dynamic> realisateur;
+  final List<dynamic> genre;
+  int note;
+  final String duree;
+  final DateTime dateDeSortie;
+  final List<DateTime> programmation;
+
+  Film({
+    required this.id,
+    required this.titre,
+    required this.synopsis,
+    required this.label,
+    required this.langue,
+    required this.affiche,
+    required this.realisateur,
+    required this.genre,
+    required this.note,
+    required this.duree,
+    required this.dateDeSortie,
+    required this.programmation,
+  });
+
+  Map<String, dynamic> toJson(String docId) => {
+        'id': docId,
+        'titre': titre,
+        'synopsis': synopsis,
+        'label': label,
+        'langue': langue,
+        'affiche': affiche,
+        'realisateur': realisateur,
+        'genre': genre,
+        'note': note,
+        'duree': duree,
+        'dateDeSortie': dateDeSortie,
+        'programmation': programmation,
+      };
+
+  static Film fromJson(Map<String, dynamic> json) => Film(
+        id: json['id'],
+        titre: json['titre'],
+        synopsis: json['synopsis'],
+        label: json['label'],
+        langue: json['langue'],
+        affiche: json['affiche'],
+        realisateur: json['realisateur'],
+        genre: json['genre'],
+        note: json['note'],
+        duree: json['duree'],
+        dateDeSortie: json['dateDeSortie'],
+        programmation: json['programmation'],
       );
 }

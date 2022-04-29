@@ -203,6 +203,7 @@ class _UgcAppState extends State<UgcApp> {
         ),
 
         // <!> HomeView()
+        // home: const Stream(),
 
         initialRoute: HomeView.route,
         routes: {
