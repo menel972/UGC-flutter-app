@@ -1,4 +1,6 @@
 // <> FilmModel()
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class FilmModel {
   final String id;
   final String titre;
@@ -8,10 +10,15 @@ class FilmModel {
   final String affiche;
   final List<dynamic> realisateur;
   final List<dynamic> genre;
-  int note;
+  final int note;
+  int userNote;
   final String duree;
-  final DateTime dateDeSortie;
-  final List<DateTime> programmation;
+  final Timestamp dateDeSortie;
+  final List<Timestamp> programmation;
+  bool more;
+  // final DateTime dateDeSortie;
+  // final List<DateTime> programmation;
+  // bool more;
 
 // <> Constructor
   FilmModel({
@@ -24,9 +31,11 @@ class FilmModel {
     required this.realisateur,
     required this.genre,
     required this.note,
+    required this.userNote,
     required this.duree,
     required this.dateDeSortie,
     required this.programmation,
+    required this.more,
   });
 
 // {} Film // Json
@@ -40,9 +49,11 @@ class FilmModel {
         'realisateur': realisateur,
         'genre': genre,
         'note': note,
+        'userNote': userNote,
         'duree': duree,
         'dateDeSortie': dateDeSortie,
         'programmation': programmation,
+        'more': more,
       };
   // NOTE : Convert FilmModel to Json
 
@@ -56,15 +67,32 @@ class FilmModel {
         realisateur: json['realisateur'],
         genre: json['genre'],
         note: json['note'],
+        userNote: json['userNote'],
         duree: json['duree'],
         dateDeSortie: json['dateDeSortie'],
-        programmation: json['programmation'],
+        programmation: List<Timestamp>.from(json['programmation']),
+        more: json['more'],
       );
   // NOTE : Convert Json to FilmModel
 
 // {}
-  List<DateTime> todaySeance(FilmModel film) => film.programmation
-      .where((date) => (date.hour - DateTime.now().hour) < 0)
-      .toList();
+  List<DateTime> todaySeance(FilmModel film) {
+    List<DateTime> datePgm =
+        film.programmation.map((stamp) => stamp.toDate()).toList();
+
+    return datePgm
+        .where((date) => (date.hour - DateTime.now().hour) < 0)
+        .toList();
+  }
   // NOTE : Get programmation of the day
+
+
+  Duration dureeToDuration(String duree) {
+    List<String> splitDuree = duree.split('H');
+    return Duration(
+      hours: int.parse(splitDuree[0]),
+      minutes: int.parse(splitDuree[1]),
+    );
+  }
+  // NOTE : Get film duree in Duration
 }

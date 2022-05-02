@@ -5,20 +5,20 @@ import 'package:ugc/services/models/film_model.dart';
 
 class CinemasCrud {
   // {} CREATE / DELETE CINEMA
-  static Future switchToFavorite(CinemaModel cine, BuildContext ctxt) async {
+  static Future switchToFavorite(BuildContext context, CinemaModel cine) async {
     CollectionReference<Map<String, dynamic>> favDb =
         FirebaseFirestore.instance.collection('favoriteCinema');
 
-    Map<String, dynamic> cineJson = cine.toJson(favDb.id);
+    Map<String, dynamic> cineJson = cine.toJson(cine.id);
 
     switch (cine.favori) {
       case false:
         return await favDb
-            .doc()
+            .doc(cine.id)
             .set(cineJson)
             // ignore: avoid_print
             .catchError((e) => print(e.toString()))
-            .then((value) => ScaffoldMessenger.of(ctxt).showSnackBar(
+            .then((value) => ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(cine.nom + ' ajouté aux favoris !'),
                   ),
@@ -85,7 +85,7 @@ class CinemasCrud {
     bool fav = !cine.favori;
 
     await db
-        .doc()
+        .doc(cine.id)
         .update({'favori': fav})
         // ignore: avoid_print
         .then((value) => print('modifié'))

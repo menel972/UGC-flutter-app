@@ -7,14 +7,10 @@ import '../../../services/providers/home_tabs_provider.dart';
 class FilmPicker extends StatelessWidget {
   // =
   final CinemaModel cinema;
-  final bool more;
-  final VoidCallback seeMore;
   // <> Constructor
   const FilmPicker({
     Key? key,
     required this.cinema,
-    required this.more,
-    required this.seeMore,
   }) : super(key: key);
 
   // <> Build
@@ -22,7 +18,7 @@ class FilmPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     // = Provided data
     final TabsInfosModel tabsInfos = Provider.of<HomeTabsProvider>(context)
-        .setFilmTabs(cinema, more, seeMore);
+        .setFilmTabs(cinema);
 
     return DefaultTabController(
       length: tabsInfos.tabs.length,

@@ -1,15 +1,13 @@
-import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../services/providers/films_provider.dart';
+import 'package:ugc/services/database/cinemas_crud.dart';
+import 'package:ugc/services/database/films_crud.dart';
 import '../../services/models/cinema_model.dart';
-import '../../services/models/film_model.dart';
 import '../components/drawer_view.dart';
 import '../components/appbar_view.dart';
 import '../components/bottom_bar_view.dart';
 
-import '../../services/providers/cinemas_provider.dart';
 import '../../services/providers/home_tabs_provider.dart';
 
 // <> HomeView()
@@ -92,33 +90,18 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     // = Provided data
-    final List<CinemaModel> cinemas =
-        Provider.of<CinemasProvider>(context).cinemas;
 
-    void switchFavoriteCinema(CinemaModel cine) {
-      int i = cinemas.indexOf(cine);
-      cinemas[i].favori = !cinemas[i].favori;
-      favoriteCine.contains(cine)
-          ? favoriteCine.remove(cine)
-          : favoriteCine.add(cine);
-    }
 
-    final UnmodifiableListView<FilmModel> newFilms =
-        Provider.of<FilmsProvider>(context).newFilms;
-    final UnmodifiableListView<FilmModel> currentFilms =
-        Provider.of<FilmsProvider>(context).currentFilms;
-    final UnmodifiableListView<FilmModel> futurFilms =
-        Provider.of<FilmsProvider>(context).futurFilms;
-    final UnmodifiableListView<FilmModel> labelFilms =
-        Provider.of<FilmsProvider>(context).labelFilms;
+
+
+
     final tabsInfos = Provider.of<HomeTabsProvider>(context).setTabs(
-      newFilms,
-      currentFilms,
-      futurFilms,
-      labelFilms,
-      cinemas,
-      favoriteCine,
-      switchFavoriteCinema,
+      FilmsCrud.fetchNew(),
+      FilmsCrud.fetchCurrent(),
+      FilmsCrud.fetchFuture(),
+      FilmsCrud.fetchLabel(),
+      CinemasCrud.fetchAll(),
+      CinemasCrud.fetchFavoriteCinemas(),
     );
 
     return DefaultTabController(

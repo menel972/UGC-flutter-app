@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:ugc/services/database/films_crud.dart';
 import 'package:ugc/views/components/note.dart';
 import 'package:ugc/views/details/widgets/film_info.dart';
 import 'package:ugc/views/details/widgets/seance_picker.dart';
 import '../../services/models/film_model.dart';
-import '../../services/providers/films_provider.dart';
 
 import '../../services/utils/color.dart' as color;
 
@@ -12,12 +11,12 @@ import '../../services/utils/color.dart' as color;
 class FilmDetailsView extends StatefulWidget {
   // =
   static const String route = './film_details';
-  final FilmModel film;
+  final String filmId;
 
   // <> Constructor
   const FilmDetailsView({
     Key? key,
-    required this.film,
+    required this.filmId,
   }) : super(key: key);
 
   @override
@@ -29,12 +28,6 @@ class _FilmDetailsViewState extends State<FilmDetailsView> {
   bool more = false;
 
   // {}
-  void seeMore() {
-    setState(() {
-      more = !more;
-    });
-  }
-
   void setNote() async {
     await showDialog(
       context: context,
@@ -70,7 +63,7 @@ class _FilmDetailsViewState extends State<FilmDetailsView> {
               ),
               // <!> Note()
               Note(
-                film: widget.film,
+                filmId: widget.filmId,
                 set: true,
               ),
               const SizedBox(
@@ -85,13 +78,13 @@ class _FilmDetailsViewState extends State<FilmDetailsView> {
                 children: [
                   // <!> Note()
                   Note(
-                    film: widget.film,
+                    filmId: widget.filmId,
                     set: false,
                   ),
-                  Text(
-                    widget.film.note.toString() + '/5',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
+                  // Text(
+                  //   widget.film.note.toString() + '/5',
+                  //   style: Theme.of(context).textTheme.titleLarge,
+                  // ),
                 ],
               ),
             ],
@@ -104,49 +97,55 @@ class _FilmDetailsViewState extends State<FilmDetailsView> {
   // <> Build
   @override
   Widget build(BuildContext context) {
-    final String filmDuree =
-        Provider.of<FilmsProvider>(context).getFilmDuration(widget.film);
+    return StreamBuilder<FilmModel>(
+        stream: FilmsCrud.fetchById(widget.filmId),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final film = snapshot.data!;
+            return Scaffold(
+              // <> AppBar
+              appBar: AppBar(
+                leading: IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(Icons.arrow_back_ios),
+                ),
+                title: Center(
+                  child: SizedBox(
+                    width: 225,
+                    child: Text(
+                      '${film.titre} (${film.duree})',
+                      style: Theme.of(context).textTheme.titleLarge,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.visible,
+                      softWrap: true,
+                    ),
+                  ),
+                ),
+              ),
 
-    return Scaffold(
-      // <> AppBar
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back_ios),
-        ),
-        title: Center(
-          child: SizedBox(
-            width: 225,
-            child: Text(
-              '${widget.film.titre} ($filmDuree)',
-              style: Theme.of(context).textTheme.titleLarge,
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.visible,
-              softWrap: true,
-            ),
-          ),
-        ),
-      ),
-
-      // <> Body
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // <!> FilmInfo()
-            FilmInfo(
-              film: widget.film,
-              more: more,
-              seeMore: seeMore,
-              setNote: setNote,
-            ),
-            // <!> SeancePicker()
-            SeancePicker(
-              film: widget.film,
-            ),
-          ],
-        ),
-      ),
-    );
+              // <> Body
+              body: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // <!> FilmInfo()
+                    FilmInfo(
+                      filmId: film.id,
+                      setNote: setNote,
+                    ),
+                    // <!> SeancePicker()
+                    SeancePicker(
+                      film: film,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          } else if (snapshot.hasError) {
+            // ignore: avoid_print
+            print('There is an error');
+          }
+          return const CircularProgressIndicator();
+        });
   }
 }

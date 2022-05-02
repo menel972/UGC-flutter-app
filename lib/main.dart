@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'views/components/cinema/cinema_details_view.dart';
 import 'views/details/film_details_view.dart';
-import 'services/models/film_model.dart';
 import 'services/providers/app_bar_provider.dart';
 import 'services/providers/cinemas_provider.dart';
-import 'services/providers/films_provider.dart';
 import 'services/providers/home_tabs_provider.dart';
 import 'services/providers/nav_bar_provider.dart';
 import 'views/home/home_view.dart';
@@ -45,8 +43,8 @@ class _UgcAppState extends State<UgcApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(value: FilmsProvider()),
-        ChangeNotifierProvider.value(value: CinemasProvider()),
+        // ChangeNotifierProvider.value(value: FilmsProvider()),
+        // ChangeNotifierProvider.value(value: CinemasProvider()),
         ChangeNotifierProvider.value(value: NavBarProvider()),
         ChangeNotifierProvider.value(value: HomeTabsProvider()),
         ChangeNotifierProvider.value(value: AppBarProvider()),
@@ -213,16 +211,16 @@ class _UgcAppState extends State<UgcApp> {
         onGenerateRoute: (settings) {
           switch (settings.name) {
             case FilmDetailsView.route:
-              final FilmModel film = settings.arguments as FilmModel;
+              final String id = settings.arguments as String;
               return MaterialPageRoute(
                 builder: (context) => FilmDetailsView(
-                  film: film,
+                  filmId: id,
                 ),
               );
             case CinemaDetailsView.route:
               final CinemaModel cinema = settings.arguments as CinemaModel;
               return MaterialPageRoute(
-                builder: (context) => CinemaDetailsView(cinema: cinema),
+                builder: (context) => CinemaDetailsView(cineId: cinema.id),
               );
           }
           return null;

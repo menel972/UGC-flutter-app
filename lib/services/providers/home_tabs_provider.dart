@@ -2,6 +2,12 @@ import 'dart:collection';
 
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
+import 'package:ugc/views/admin/widgets/add_cinema.dart';
+import 'package:ugc/views/admin/widgets/add_film.dart';
+import 'package:ugc/views/admin/widgets/remove_cinema.dart';
+import 'package:ugc/views/admin/widgets/remove_film.dart';
+import 'package:ugc/views/admin/widgets/update_cinema.dart';
+import 'package:ugc/views/admin/widgets/update_film.dart';
 import 'package:ugc/views/components/cinema/cinema_film_list.dart';
 import 'package:ugc/views/details/widgets/seance_list.dart';
 import '../../services/models/film_model.dart';
@@ -26,13 +32,12 @@ class TabsInfosModel {
 
 class HomeTabsProvider with ChangeNotifier {
   UnmodifiableListView<TabsInfosModel> setTabs(
-    List<FilmModel> newFilms,
-    List<FilmModel> currentFilms,
-    List<FilmModel> futurFilms,
-    List<FilmModel> labelFilms,
-    List<CinemaModel> cinemas,
-    List<CinemaModel> favoriteCinemas,
-    Function(CinemaModel) switchFavorite,
+    Stream<List<FilmModel>> newFilmsStream,
+    Stream<List<FilmModel>> currentFilmsStream,
+    Stream<List<FilmModel>> futurFilmsStream,
+    Stream<List<FilmModel>> labelFilmsStream,
+    Stream<List<CinemaModel>> cinemasStream,
+    Stream<List<CinemaModel>> favoriteCinemasStream,
   ) {
     return UnmodifiableListView([
       TabsInfosModel(
@@ -44,10 +49,10 @@ class HomeTabsProvider with ChangeNotifier {
           ],
           color: color.primary,
           tabView: [
-            FilmList(films: newFilms),
-            FilmList(films: currentFilms),
-            FilmList(films: futurFilms),
-            FilmList(films: labelFilms),
+            FilmList(filmsStream: newFilmsStream),
+            FilmList(filmsStream: currentFilmsStream),
+            FilmList(filmsStream: futurFilmsStream),
+            FilmList(filmsStream: labelFilmsStream),
           ]),
       TabsInfosModel(
         tabs: [
@@ -57,12 +62,10 @@ class HomeTabsProvider with ChangeNotifier {
         color: color.label,
         tabView: [
           CinemaList(
-            cinemas: cinemas,
-            switchFavoriteCinema: switchFavorite,
+            cinemasStream: cinemasStream,
           ),
           CinemaList(
-            cinemas: favoriteCinemas,
-            switchFavoriteCinema: switchFavorite,
+            cinemasStream: favoriteCinemasStream,
           ),
         ],
       ),
@@ -93,8 +96,6 @@ class HomeTabsProvider with ChangeNotifier {
 
   TabsInfosModel setDateTabs(
     FilmModel film,
-    List<DateTime> programmation1,
-    List<DateTime> programmation2,
   ) {
     return TabsInfosModel(
       tabs: dateList.map((date) {
@@ -113,19 +114,19 @@ class HomeTabsProvider with ChangeNotifier {
       }).toList(),
       color: color.label,
       tabView: dateList
-          .map((date) => SeanceList(
-                film: film,
-                programmation:
-                    date == dateList[0] ? programmation2 : programmation1,
-              ))
+          .map(
+            (date) => SeanceList(
+              film: film,
+              // programmation:
+              //     date == dateList[0] ? programmation2 : programmation1,
+            ),
+          )
           .toList(),
     );
   }
 
   TabsInfosModel setFilmTabs(
     CinemaModel cinema,
-    bool more,
-    VoidCallback seeMore,
   ) {
     return TabsInfosModel(
       tabs: dateList.map((date) {
@@ -144,9 +145,34 @@ class HomeTabsProvider with ChangeNotifier {
       }).toList(),
       color: color.label,
       tabView: dateList
-          .map((date) =>
-              CinemaFilmList(cinema: cinema, more: more, seeMore: seeMore))
+          .map(
+            (date) => CinemaFilmList(
+              cinema: cinema,
+            ),
+          )
           .toList(),
+    );
+  }
+
+  TabsInfosModel setAdminTabs(int index) {
+    return TabsInfosModel(
+      tabs: [
+        const FittedBox(child: Text('AJOUTER')),
+        const FittedBox(child: Text('MODIFIER')),
+        const FittedBox(child: Text('RETIRER')),
+      ],
+      color: color.primary,
+      tabView: index == 0
+          ? const [
+              AddFilm(),
+              UpdateFilm(),
+              Removefilm(),
+            ]
+          : const [
+              AddCinema(),
+              UpdateCinema(),
+              RemoveCinema(),
+            ],
     );
   }
 }

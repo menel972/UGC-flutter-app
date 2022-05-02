@@ -32,8 +32,8 @@ class FilmsCrud {
         .map((doc) => FilmModel.fromJson(doc.data()))
         .toList()
         .where((film) =>
-            film.dateDeSortie.difference(DateTime.now()).inDays > -7 &&
-            film.dateDeSortie.difference(DateTime.now()).inDays < 1)
+            film.dateDeSortie.toDate().difference(DateTime.now()).inDays > -7 &&
+            film.dateDeSortie.toDate().difference(DateTime.now()).inDays < 1)
         .toList());
   }
   // NOTE : Get new films
@@ -46,7 +46,8 @@ class FilmsCrud {
         .map((doc) => FilmModel.fromJson(doc.data()))
         .toList()
         .where(
-            (film) => film.dateDeSortie.difference(DateTime.now()).inDays < 1)
+            (film) =>
+            film.dateDeSortie.toDate().difference(DateTime.now()).inDays < 1)
         .toList());
   }
   // NOTE : Get current films
@@ -59,7 +60,8 @@ class FilmsCrud {
         .map((doc) => FilmModel.fromJson(doc.data()))
         .toList()
         .where(
-            (film) => film.dateDeSortie.difference(DateTime.now()).inDays > 0)
+            (film) =>
+            film.dateDeSortie.toDate().difference(DateTime.now()).inDays > 0)
         .toList());
   }
   // NOTE : Get future films
@@ -89,17 +91,33 @@ class FilmsCrud {
   // NOTE : Get all films of a cinema
 
   // {} UPDATE FILMS
-  static Future commitNote(String id, int note) async {
+  static Future commitNote(String id, int myNote) async {
     CollectionReference<Map<String, dynamic>> db =
         FirebaseFirestore.instance.collection('film');
 
     await db
         .doc(id)
-        .update({'note': note})
+        .update({'userNote': myNote})
         // ignore: avoid_print
-        .then((value) => print('Note modifiée'))
+        .then((value) => print('userNote modifiée'))
         // ignore: avoid_print
         .catchError((e) => print(e.toString()));
   }
   // NOTE : Update film note
+
+  static Future commitMore(String id, bool more) async {
+    CollectionReference<Map<String, dynamic>> db =
+        FirebaseFirestore.instance.collection('film');
+
+    final bool newMore = !more;
+
+    await db
+        .doc(id)
+        .update({'more': newMore})
+        // ignore: avoid_print
+        .then((value) => print('More modifiée'))
+        // ignore: avoid_print
+        .catchError((e) => print(e.toString()));
+  }
+  // NOTE : Update film more
 }

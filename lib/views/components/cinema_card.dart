@@ -9,13 +9,11 @@ import 'cinema/cinema_details_view.dart';
 class CinemaCard extends StatelessWidget {
   // =
   final String cineId;
-  final Function(CinemaModel)? switchFavoriteCinema;
   // TODO : changer cette fonction
   // <> Constructor
   const CinemaCard({
     Key? key,
     required this.cineId,
-    this.switchFavoriteCinema,
   }) : super(key: key);
 
   // <> Build
@@ -58,54 +56,70 @@ class CinemaCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      if (cine.favori == true) ...[
-                        switchFavoriteCinema != null
-                            ? IconButton(
-                                onPressed: () => {
-                                  switchFavoriteCinema!(cine),
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        'UGC ${cine.nom} a été retiré de vos favoris !',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelSmall,
-                                      ),
-                                      backgroundColor: Colors.black45,
-                                    ),
-                                  )
-                                },
-                                icon: const Icon(Icons.favorite),
-                                color: color.secondary,
-                              )
-                            : const Icon(
+                      IconButton(
+                        icon: cine.favori == true
+                            ? const Icon(
                                 Icons.favorite,
                                 color: color.secondary,
-                              ),
-                      ] else
-                        switchFavoriteCinema != null
-                            ? IconButton(
-                                onPressed: () => {
-                                  switchFavoriteCinema!(cine),
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        'UGC ${cine.nom} a été ajouté à vos favoris !',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelSmall,
-                                      ),
-                                      backgroundColor: Colors.black45,
-                                    ),
-                                  )
-                                },
-                                icon: const Icon(Icons.favorite_border),
-                                color: color.label,
                               )
                             : const Icon(
                                 Icons.favorite_border,
                                 color: color.label,
                               ),
+                        onPressed: () {
+                          CinemasCrud.switchToFavorite(context, cine);
+                          CinemasCrud.commitFavorite(cine);
+                        },
+                      ),
+                      // TODO : Verifier si ça fonctionne !
+                      // if (cine.favori == true) ...[
+                      //   switchFavoriteCinema != null
+                      //       ? IconButton(
+                      //           onPressed: () => {
+                      //             switchFavoriteCinema!(cine),
+                      //             ScaffoldMessenger.of(context).showSnackBar(
+                      //               SnackBar(
+                      //                 content: Text(
+                      //                   'UGC ${cine.nom} a été retiré de vos favoris !',
+                      //                   style: Theme.of(context)
+                      //                       .textTheme
+                      //                       .labelSmall,
+                      //                 ),
+                      //                 backgroundColor: Colors.black45,
+                      //               ),
+                      //             )
+                      //           },
+                      //           icon: const Icon(Icons.favorite),
+                      //           color: color.secondary,
+                      //         )
+                      //       : const Icon(
+                      //           Icons.favorite,
+                      //           color: color.secondary,
+                      //         ),
+                      // ] else
+                      //   switchFavoriteCinema != null
+                      //       ? IconButton(
+                      //           onPressed: () => {
+                      //             switchFavoriteCinema!(cine),
+                      //             ScaffoldMessenger.of(context).showSnackBar(
+                      //               SnackBar(
+                      //                 content: Text(
+                      //                   'UGC ${cine.nom} a été ajouté à vos favoris !',
+                      //                   style: Theme.of(context)
+                      //                       .textTheme
+                      //                       .labelSmall,
+                      //                 ),
+                      //                 backgroundColor: Colors.black45,
+                      //               ),
+                      //             )
+                      //           },
+                      //           icon: const Icon(Icons.favorite_border),
+                      //           color: color.label,
+                      //         )
+                      //       : const Icon(
+                      //           Icons.favorite_border,
+                      //           color: color.label,
+                      //         ),
                     ],
                   ),
                 ),

@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import '../../../services/models/film_model.dart';
 import '../../../services/providers/home_tabs_provider.dart';
 
-import '../../../services/providers/films_provider.dart';
 
 // <> SeancePicker()
 class SeancePicker extends StatelessWidget {
@@ -20,10 +19,8 @@ class SeancePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // = Provided data
-    final List<DateTime> programmation2 =
-        Provider.of<FilmsProvider>(context).programmation(film);
     final TabsInfosModel tabsInfos = Provider.of<HomeTabsProvider>(context)
-        .setDateTabs(film, film.programmation, programmation2);
+        .setDateTabs(film);
 
     return DefaultTabController(
       length: tabsInfos.tabs.length,

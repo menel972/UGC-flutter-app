@@ -26,8 +26,9 @@ class FilmPosterCard extends StatelessWidget {
             if (snapshot.hasData) {
               final FilmModel film = snapshot.data!;
               return InkWell(
+                // <!> FilmDetailsView()
                 onTap: () => Navigator.pushNamed(context, FilmDetailsView.route,
-                    arguments: film),
+                    arguments: film.id),
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
