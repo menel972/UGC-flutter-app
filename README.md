@@ -1,8 +1,8 @@
-## About UGC Clone App
+# About UGC Clone App
 
 I made this this clone of cinemas UGC app to improve my flutter and firebase skills.
 
-I add an administrator interface to easily <b>add, update and remove</b> films or cinemas.
+I add an administrator interface to easily <strong>add, update and remove</strong> films or cinemas.
 
 <p>
 <img alt="Flutter" src="https://img.shields.io/badge/Flutter-02569B?style=flat-square&logo=flutter&logoColor=white" />
