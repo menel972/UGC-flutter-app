@@ -1,16 +1,26 @@
-# ugc
+## About UGC Clone App
 
-A new Flutter project.
+I made this this clone of cinemas UGC app to improve my flutter and firebase skills.
+I add an administrator interface to easily add, update and remove films or cinemas.
+
+<p>
+<img alt="Flutter" src="https://img.shields.io/badge/Flutter-02569B?style=flat-square&logo=flutter&logoColor=white" />
+<img alt="Dart" src="https://img.shields.io/badge/Dart-0175C2?style=flat-square&logo=dart&logoColor=white" />
+<img alt="Firebase" src="https://img.shields.io/badge/Firebase-D19222?style=flat-square&logo=firebase&logoColor=white" />
+</p>
+
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To get a local copy up and running follow these simple steps.
 
-A few resources to get you started if this is your first Flutter project:
+### Prerequisites
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+you need a complete version of flutter installed on your computer and an emulator of ios or android device.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Install
+Clone this repo : https://github.com/menel972/UGC-flutter-app.git
+
+run : 
+$ flutter pub get
+$ flutter run
