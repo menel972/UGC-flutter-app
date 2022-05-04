@@ -1,33 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:ugc/services/database/cinemas_crud.dart';
-import 'package:ugc/services/models/cinema_model.dart';
 
-class AddCinema extends StatefulWidget {
-  const AddCinema({Key? key}) : super(key: key);
+import '../../../services/database/cinemas_crud.dart';
+import '../../../services/models/cinema_model.dart';
+
+// <> UpdateCinemaView()
+class UpdateCinemaView extends StatefulWidget {
+  // =
+  final CinemaModel cine;
+
+  // <> Constructor
+  const UpdateCinemaView({Key? key, required this.cine}) : super(key: key);
 
   @override
-  State<AddCinema> createState() => _AddCinemaState();
+  State<UpdateCinemaView> createState() => _UpdateCinemaViewState();
 }
 
-class _AddCinemaState extends State<AddCinema> {
+// <> _UpdateCinemaViewState()
+class _UpdateCinemaViewState extends State<UpdateCinemaView> {
   // = Controller
   final GlobalKey<FormState> _addCineKey = GlobalKey<FormState>();
 
-  final TextEditingController _nom = TextEditingController();
-  final TextEditingController _adress = TextEditingController();
-  final TextEditingController _films = TextEditingController();
+  late TextEditingController _nom;
+  late TextEditingController _adress;
+  late TextEditingController _films;
+
+  // {} initState
+  @override
+  void initState() {
+    _nom = TextEditingController(text: widget.cine.nom);
+    _adress = TextEditingController(text: widget.cine.adress);
+    _films = TextEditingController(text: widget.cine.films.join(', '));
+    super.initState();
+  }
 
   // {}
-  Future createNewCinema() {
+  Future updateCinema() {
     CinemaModel newCine = CinemaModel(
-      id: '',
+      id: widget.cine.id,
       nom: _nom.text,
       adress: _adress.text,
       films: _films.text.toUpperCase().split(', '),
-      favori: false,
+      favori: widget.cine.favori,
     );
 
-    return CinemasCrud.pushCinema(newCine);
+    return CinemasCrud.commitAll(newCine);
   }
 
   @override
@@ -36,6 +52,7 @@ class _AddCinemaState extends State<AddCinema> {
     super.dispose();
   }
 
+  // <> Build
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -85,9 +102,9 @@ class _AddCinemaState extends State<AddCinema> {
                 children: [
                   TextButton(
                       onPressed: () => {
-                            _nom.clear(),
-                            _adress.clear(),
-                            _films.clear(),
+                            _nom.text = widget.cine.nom,
+                            _adress.text = widget.cine.adress,
+                            _films.text = widget.cine.films.join(', '),
                           },
                       child: Text(
                         'Annuler',
@@ -95,12 +112,10 @@ class _AddCinemaState extends State<AddCinema> {
                       )),
                   ElevatedButton(
                       onPressed: () => {
-                            createNewCinema(),
+                            updateCinema(),
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Text(_nom.text + ' a été ajouté'))),
-                            _nom.clear(),
-                            _adress.clear(),
-                            _films.clear(),
+                                content: Text(_nom.text + ' a été modifié'))),
+                            Navigator.pop(context),
                           },
                       child: Text(
                         'Sauvegarder',

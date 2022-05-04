@@ -2,19 +2,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FilmModel {
-  final String id;
-  final String titre;
-  final String synopsis;
-  final String label;
-  final String langue;
-  final String affiche;
-  final List<dynamic> realisateur;
-  final List<dynamic> genre;
-  final int note;
+  String id;
+  String titre;
+  String synopsis;
+  String label;
+  String langue;
+  String affiche;
+  List<dynamic> realisateur;
+  List<dynamic> genre;
+  int note;
   int userNote;
-  final String duree;
-  final Timestamp dateDeSortie;
-  final List<Timestamp> programmation;
+  String duree;
+  Timestamp dateDeSortie;
+  List<Timestamp> programmation;
   bool more;
   // final DateTime dateDeSortie;
   // final List<DateTime> programmation;

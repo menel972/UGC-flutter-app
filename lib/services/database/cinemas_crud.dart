@@ -4,7 +4,18 @@ import 'package:ugc/services/models/cinema_model.dart';
 import 'package:ugc/services/models/film_model.dart';
 
 class CinemasCrud {
+  static CollectionReference<Map<String, dynamic>> db =
+      FirebaseFirestore.instance.collection('cinema');
+
   // {} CREATE / DELETE CINEMA
+  static Future pushCinema(CinemaModel cine) async {
+    DocumentReference<Map<String, dynamic>> doc = db.doc();
+    Map<String, dynamic> newCine = cine.toJson(doc.id);
+
+    // ignore: avoid_print
+    await doc.set(newCine).catchError((e) => print(e.toString()));
+  }
+
   static Future switchToFavorite(BuildContext context, CinemaModel cine) async {
     CollectionReference<Map<String, dynamic>> favDb =
         FirebaseFirestore.instance.collection('favoriteCinema');
@@ -68,6 +79,19 @@ class CinemasCrud {
   }
   // NOTE : Get all cinemas that play a given film
 
+  static Stream<List<CinemaModel>> fetchWithFilter(String filter) {
+    CollectionReference<Map<String, dynamic>> db =
+        FirebaseFirestore.instance.collection('cinema');
+
+    return db.snapshots().map((snap) => snap.docs
+        .map((doc) => CinemaModel.fromJson(doc.data()))
+        .toList()
+        .where(
+            (cinema) => cinema.nom.toLowerCase().contains(filter.toLowerCase()))
+        .toList());
+  }
+  // NOTE : Enable to fetch cinemas that match with a filter
+
   static Stream<List<CinemaModel>> fetchFavoriteCinemas() {
     CollectionReference<Map<String, dynamic>> db =
         FirebaseFirestore.instance.collection('favoriteCinema');
@@ -78,6 +102,17 @@ class CinemasCrud {
   // NOTE : Get all favorite cinemas
 
   // {} UPDATE CINEMA
+  static Future commitAll(CinemaModel cine) async {
+    Map<String, dynamic> newCineJson = cine.toJson(cine.id);
+
+    await db
+        .doc(cine.id)
+        .update(newCineJson)
+        // ignore: avoid_print
+        .catchError((e) => print(e.toString()));
+  }
+  // NOTE : Update all the values of a cinema
+
   static Future commitFavorite(CinemaModel cine) async {
     CollectionReference<Map<String, dynamic>> db =
         FirebaseFirestore.instance.collection('cinema');
@@ -93,4 +128,29 @@ class CinemasCrud {
         .catchError((e) => print(e.toString()));
   }
   // NOTE : Switch status favori of a cinema
+
+  // {} REMOVE CINEMA
+  static Future removeById(String id) async {
+    CollectionReference<Map<String, dynamic>> db =
+        FirebaseFirestore.instance.collection('cinema');
+
+    await db
+        .doc(id)
+        .delete()
+        // ignore: avoid_print
+        .catchError((e) => print(e.toString()));
+  }
+  // NOTE : Remove a film from the database
+
+  static Future removeFavById(String id) async {
+    CollectionReference<Map<String, dynamic>> favDb =
+        FirebaseFirestore.instance.collection('favoriteCinema');
+
+    await favDb
+        .doc(id)
+        .delete()
+        // ignore: avoid_print
+        .catchError((e) => print(e.toString()));
+  }
+  // NOTE : Remove a film from the database
 }

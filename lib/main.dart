@@ -1,10 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ugc/views/admin/admin_view.dart';
+import 'package:ugc/views/admin/update_view.dart';
 import 'views/components/cinema/cinema_details_view.dart';
 import 'views/details/film_details_view.dart';
 import 'services/providers/app_bar_provider.dart';
-import 'services/providers/cinemas_provider.dart';
 import 'services/providers/home_tabs_provider.dart';
 import 'services/providers/nav_bar_provider.dart';
 import 'views/home/home_view.dart';
@@ -30,7 +31,6 @@ class UgcApp extends StatefulWidget {
 // <> _UgcAppState()
 class _UgcAppState extends State<UgcApp> {
   // =
-  final CinemasProvider cinemaProvider = CinemasProvider();
 
   // {} initState
   @override
@@ -43,8 +43,6 @@ class _UgcAppState extends State<UgcApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // ChangeNotifierProvider.value(value: FilmsProvider()),
-        // ChangeNotifierProvider.value(value: CinemasProvider()),
         ChangeNotifierProvider.value(value: NavBarProvider()),
         ChangeNotifierProvider.value(value: HomeTabsProvider()),
         ChangeNotifierProvider.value(value: AppBarProvider()),
@@ -74,8 +72,37 @@ class _UgcAppState extends State<UgcApp> {
             ),
           ),
 
+          // <> Input
+          inputDecorationTheme: const InputDecorationTheme(
+            constraints: BoxConstraints(maxHeight: 40),
+            focusColor: color.primary,
+            hoverColor: color.primary,
+            contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+            hintStyle: TextStyle(
+              fontFamily: 'Uniform',
+              color: color.label,
+              fontSize: 18,
+            ),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(width: 0.8, color: color.label),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(width: 1, color: color.primary),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderSide: BorderSide(width: 1, color: color.secondary),
+            ),
+          ),
+
           // <> TextTheme
           textTheme: const TextTheme(
+            headlineLarge: TextStyle(
+              fontFamily: 'Uniform',
+              color: color.secondary,
+              fontSize: 24,
+            ),
+            // NOTE : HeadlineLarge
+
             displayLarge: TextStyle(
               fontFamily: 'Uniform',
               color: color.bkg,
@@ -221,6 +248,16 @@ class _UgcAppState extends State<UgcApp> {
               final CinemaModel cinema = settings.arguments as CinemaModel;
               return MaterialPageRoute(
                 builder: (context) => CinemaDetailsView(cineId: cinema.id),
+              );
+            case AdminView.route:
+              return MaterialPageRoute(
+                builder: (context) => const AdminView(),
+              );
+            case UpdateView.route:
+              final Map<String, dynamic> id =
+                  settings.arguments as Map<String, dynamic>;
+              return MaterialPageRoute(
+                builder: (context) => UpdateView(id: id),
               );
           }
           return null;

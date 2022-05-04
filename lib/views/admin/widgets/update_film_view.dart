@@ -2,50 +2,71 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_select_items/flutter_multi_select_items.dart';
 import 'package:intl/intl.dart';
-import 'package:ugc/services/database/films_crud.dart';
-import 'package:ugc/services/models/film_model.dart';
 
+import '../../../services/database/films_crud.dart';
+import '../../../services/models/film_model.dart';
 import '../../../services/utils/color.dart' as color;
 
-// <> AddFilm()
-class AddFilm extends StatefulWidget {
+// <> UpdateFilmView()
+class UpdateFilmView extends StatefulWidget {
+  // =
+  final FilmModel film;
+
   // <> Constructor
-  const AddFilm({Key? key}) : super(key: key);
+  const UpdateFilmView({Key? key, required this.film}) : super(key: key);
 
   @override
-  State<AddFilm> createState() => _AddFilmState();
+  State<UpdateFilmView> createState() => _UpdateFilmViewState();
 }
+// <> _UpdateFilmViewState()
 
-// <>  _AddFilmState()
-class _AddFilmState extends State<AddFilm> {
-  DateTime releaseDate = DateTime.now();
+class _UpdateFilmViewState extends State<UpdateFilmView> {
+  // =
+  FilmModel get film => widget.film;
+  late DateTime _releaseDate;
 
   // = Controllers
-  final TextEditingController _langue = TextEditingController();
-  final TextEditingController _note = TextEditingController();
-  final TextEditingController _duree = TextEditingController();
-  final TextEditingController _titre = TextEditingController();
-  final TextEditingController _affiche = TextEditingController();
-  final TextEditingController _realisateur = TextEditingController();
-  final TextEditingController _synopsis = TextEditingController();
+  late TextEditingController _langue;
+  late TextEditingController _note;
+  late TextEditingController _duree;
+  late TextEditingController _titre;
+  late TextEditingController _affiche;
+  late TextEditingController _realisateur;
+  late TextEditingController _synopsis;
   final MultiSelectController _label = MultiSelectController();
   final MultiSelectController _genre = MultiSelectController();
 
+  // {} initState
+  @override
+  void initState() {
+    _releaseDate = film.dateDeSortie.toDate();
+    _langue = TextEditingController(text: film.langue);
+    _note = TextEditingController(text: film.note.toString());
+    _duree = TextEditingController(text: film.duree);
+    _titre = TextEditingController(text: film.titre);
+    _affiche = TextEditingController(text: film.affiche);
+    _realisateur = TextEditingController(text: film.realisateur.join(', '));
+    _synopsis = TextEditingController(text: film.synopsis);
+    super.initState();
+  }
+
+  // {} DatePicker
   datePicker() async {
     DateTime? date = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: film.dateDeSortie.toDate(),
       firstDate: DateTime.utc(2020, 5),
       lastDate: DateTime.utc(2030),
     );
     setState(() {
-      releaseDate = date!;
+      _releaseDate = date!;
     });
   }
 
-  Future createNewFilm() {
+  // {}
+  Future updateFilm() {
     FilmModel newFilm = FilmModel(
-      id: '',
+      id: film.id,
       titre: _titre.text,
       synopsis: _synopsis.text,
       label: _label.getSelectedItems()[0],
@@ -54,14 +75,14 @@ class _AddFilmState extends State<AddFilm> {
       realisateur: _realisateur.text.split(', '),
       genre: _genre.getSelectedItems(),
       note: int.parse(_note.text),
-      userNote: 0,
+      userNote: film.userNote,
       duree: _duree.text,
-      dateDeSortie: Timestamp.fromDate(releaseDate),
-      programmation: [],
+      dateDeSortie: Timestamp.fromDate(_releaseDate),
+      programmation: film.programmation,
       more: false,
     );
 
-    return FilmsCrud.pushFilm(newFilm);
+    return FilmsCrud.commitAll(newFilm);
   }
 
   // <> Build
@@ -119,23 +140,59 @@ class _AddFilmState extends State<AddFilm> {
                             isMaxSelectableWithPerpetualSelects: true,
                             items: [
                               MultiSelectCard(
-                                  value: 'NOUVEAU',
-                                  label: 'Nouveau',
-                                  selected: true),
+                                value: 'NOUVEAU',
+                                label: 'Nouveau',
+                                selected:
+                                    film.label == 'NOUVEAU' ? true : false,
+                              ),
                               MultiSelectCard(
-                                  value: 'découverte ugc'.toLowerCase(),
-                                  label: 'Découverte'),
+                                value: 'découverte ugc'.toUpperCase(),
+                                label: 'Découverte',
+                                selected:
+                                    film.label == 'découverte ugc'.toUpperCase()
+                                        ? true
+                                        : false,
+                              ),
                               MultiSelectCard(
-                                  value: 'UGC CULTE', label: 'Culte'),
+                                value: 'UGC CULTE',
+                                label: 'Culte',
+                                selected:
+                                    film.label == 'UGC CULTE' ? true : false,
+                              ),
                               MultiSelectCard(
-                                  value: 'LABEL SPECTATEUR UGC',
-                                  label: 'Spectateur'),
+                                value: 'LABEL SPECTATEUR UGC',
+                                label: 'Spectateur',
+                                selected: film.label == 'LABEL SPECTATEUR UGC'
+                                    ? true
+                                    : false,
+                              ),
                               MultiSelectCard(
-                                  value: 'UGC FAMILY', label: 'Family'),
-                              MultiSelectCard(value: 'UGC DOCS', label: 'Docs'),
-                              MultiSelectCard(value: 'UGC M', label: 'M'),
-                              MultiSelectCard(value: '-12', label: '-12'),
-                              MultiSelectCard(value: '-16', label: '-16'),
+                                value: 'UGC FAMILY',
+                                label: 'Family',
+                                selected:
+                                    film.label == 'UGC FAMILY' ? true : false,
+                              ),
+                              MultiSelectCard(
+                                value: 'UGC DOCS',
+                                label: 'Docs',
+                                selected:
+                                    film.label == 'UGC DOCS' ? true : false,
+                              ),
+                              MultiSelectCard(
+                                value: 'UGC M',
+                                label: 'M',
+                                selected: film.label == 'UGC M' ? true : false,
+                              ),
+                              MultiSelectCard(
+                                value: '-12',
+                                label: '-12',
+                                selected: film.label == '-12' ? true : false,
+                              ),
+                              MultiSelectCard(
+                                value: '-16',
+                                label: '-16',
+                                selected: film.label == '-16' ? true : false,
+                              ),
                             ],
                             onChange: (allSelectedItems, selectedItem) {},
                           ),
@@ -184,27 +241,89 @@ class _AddFilmState extends State<AddFilm> {
                             ),
                             items: [
                               MultiSelectCard(
-                                  value: 'Comédie', label: 'Comédie'),
-                              MultiSelectCard(value: 'Drame', label: 'Drame'),
+                                value: 'Comédie',
+                                label: 'Comédie',
+                                selected: film.genre.contains('Comédie')
+                                    ? true
+                                    : false,
+                              ),
                               MultiSelectCard(
-                                  value: 'Historique', label: 'Historique'),
+                                value: 'Drame',
+                                label: 'Drame',
+                                selected:
+                                    film.genre.contains('Drame') ? true : false,
+                              ),
                               MultiSelectCard(
-                                  value: 'Thriller', label: 'Thriller'),
+                                value: 'Historique',
+                                label: 'Historique',
+                                selected: film.genre.contains('Historiqe')
+                                    ? true
+                                    : false,
+                              ),
                               MultiSelectCard(
-                                  value: 'Science Fiction', label: 'SF'),
+                                value: 'Thriller',
+                                label: 'Thriller',
+                                selected: film.genre.contains('Thriller')
+                                    ? true
+                                    : false,
+                              ),
                               MultiSelectCard(
-                                  value: 'Judiciaire', label: 'Judiciaire'),
+                                value: 'Science Fiction',
+                                label: 'SF',
+                                selected: film.genre.contains('Science Fiction')
+                                    ? true
+                                    : false,
+                              ),
                               MultiSelectCard(
-                                  value: 'Fantastique', label: 'Fantastique'),
+                                value: 'Judiciaire',
+                                label: 'Judiciaire',
+                                selected: film.genre.contains('Judiciaire')
+                                    ? true
+                                    : false,
+                              ),
                               MultiSelectCard(
-                                  value: 'Aventure', label: 'Aventure'),
+                                value: 'Fantastique',
+                                label: 'Fantastique',
+                                selected: film.genre.contains('Fantastique')
+                                    ? true
+                                    : false,
+                              ),
                               MultiSelectCard(
-                                  value: 'Animation', label: 'Animation'),
-                              MultiSelectCard(value: 'Action', label: 'Action'),
+                                value: 'Aventure',
+                                label: 'Aventure',
+                                selected: film.genre.contains('Aventure')
+                                    ? true
+                                    : false,
+                              ),
                               MultiSelectCard(
-                                  value: 'Famille', label: 'Famille'),
+                                value: 'Animation',
+                                label: 'Animation',
+                                selected: film.genre.contains('Animation')
+                                    ? true
+                                    : false,
+                              ),
                               MultiSelectCard(
-                                  value: 'Epouvante-horreur', label: 'Horreur'),
+                                value: 'Action',
+                                label: 'Action',
+                                selected: film.genre.contains('Action')
+                                    ? true
+                                    : false,
+                              ),
+                              MultiSelectCard(
+                                value: 'Famille',
+                                label: 'Famille',
+                                selected: film.genre.contains('Famille')
+                                    ? true
+                                    : false,
+                              ),
+                              MultiSelectCard(
+                                value: 'Epouvante-horreur',
+                                label: 'Horreur',
+                                selected:
+                                    film.genre.contains('Epouvante-horreur')
+                                        ? true
+                                        : false,
+                              ),
                             ],
                             onChange: (allSelectedItems, selectedItem) {},
                           ),
@@ -252,7 +371,7 @@ class _AddFilmState extends State<AddFilm> {
                             ),
                             label: Text(
                               'date : ' +
-                                  DateFormat('d/MM/y').format(releaseDate),
+                                  DateFormat('d/MM/y').format(_releaseDate),
                               style: Theme.of(context).textTheme.displayMedium,
                             ),
                           ),
@@ -301,16 +420,10 @@ class _AddFilmState extends State<AddFilm> {
                         const SizedBox(width: 10),
                         Flexible(
                           flex: 1,
-                          child: _affiche.text.isEmpty
-                              ? const Icon(
-                                  Icons.image_outlined,
-                                  size: 45,
-                                  color: color.primary,
-                                )
-                              : Image(
-                                  image: AssetImage(_affiche.text),
-                                  height: 100,
-                                ),
+                          child: Image(
+                            image: AssetImage(_affiche.text),
+                            height: 100,
+                          ),
                         ),
                       ],
                     ),
@@ -341,16 +454,16 @@ class _AddFilmState extends State<AddFilm> {
                 children: [
                   TextButton(
                       onPressed: () => {
-                            _langue.clear(),
-                            _note.clear(),
-                            _duree.clear(),
-                            _titre.clear(),
-                            _affiche.clear(),
-                            _realisateur.clear(),
-                            _synopsis.clear(),
-                            _label.deselectAll(),
-                            _genre.deselectAll(),
-                            setState(() {}),
+                            _langue.text = film.langue,
+                            _note.text = film.note.toString(),
+                            _duree.text = film.duree,
+                            _titre.text = film.titre,
+                            _affiche.text = film.affiche,
+                            _realisateur.text = film.realisateur.join((', ')),
+                            _synopsis.text = film.synopsis,
+                            setState(() {
+                              _releaseDate = film.dateDeSortie.toDate();
+                            }),
                           },
                       child: Text(
                         'Annuler',
@@ -358,19 +471,10 @@ class _AddFilmState extends State<AddFilm> {
                       )),
                   ElevatedButton(
                       onPressed: () => {
-                            createNewFilm(),
+                            updateFilm(),
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Text(_titre.text + ' a été ajouté'))),
-                            _langue.clear(),
-                            _note.clear(),
-                            _duree.clear(),
-                            _titre.clear(),
-                            _affiche.clear(),
-                            _realisateur.clear(),
-                            _synopsis.clear(),
-                            _label.deselectAll(),
-                            _genre.deselectAll(),
-                            setState(() {}),
+                                content: Text(_titre.text + ' a été modifié'))),
+                            Navigator.pop(context),
                           },
                       child: Text(
                         'Sauvegarder',
