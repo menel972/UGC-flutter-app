@@ -3,20 +3,24 @@ import 'package:ugc/services/models/cinema_model.dart';
 import 'package:ugc/services/models/film_model.dart';
 
 class FilmsCrud {
+  static CollectionReference<Map<String, dynamic>> db =
+      FirebaseFirestore.instance.collection('film');
+
+  // {} CREATE FILM
+  static Future pushFilm(FilmModel film) async {
+    DocumentReference<Map<String, dynamic>> doc = db.doc();
+    // ignore: avoid_print
+    await doc.set(film.toJson(doc.id)).catchError((e) => print(e.toString()));
+  }
+
   // {} READ FILMS
   static Stream<List<FilmModel>> fetchAll() {
-    CollectionReference<Map<String, dynamic>> db =
-        FirebaseFirestore.instance.collection('film');
-
     return db.snapshots().map((snap) =>
         snap.docs.map((doc) => FilmModel.fromJson(doc.data())).toList());
   }
   // NOTE : Get all films
 
   static Stream<FilmModel> fetchById(String id) {
-    CollectionReference<Map<String, dynamic>> db =
-        FirebaseFirestore.instance.collection('film');
-
     return db
         .doc(id)
         .snapshots()
@@ -24,52 +28,49 @@ class FilmsCrud {
   }
   // NOTE : Get a film by its id
 
-  static Stream<List<FilmModel>> fetchNew() {
-    CollectionReference<Map<String, dynamic>> db =
-        FirebaseFirestore.instance.collection('film');
+  static Stream<List<FilmModel>> fetchWithFilter(String filter) {
+    return db.snapshots().map((snap) => snap.docs
+        .map((doc) => FilmModel.fromJson(doc.data()))
+        .toList()
+        .where(
+            (film) => film.titre.toLowerCase().contains(filter.toLowerCase()))
+        .toList());
+  }
+  // NOTE : Enable to fetch films that match with a filter
 
+  static Stream<List<FilmModel>> fetchNew() {
     return db.snapshots().map((snap) => snap.docs
         .map((doc) => FilmModel.fromJson(doc.data()))
         .toList()
         .where((film) =>
-            film.dateDeSortie.toDate().difference(DateTime.now()).inDays > -7 &&
-            film.dateDeSortie.toDate().difference(DateTime.now()).inDays < 1)
+            film.dateDeSortie.toDate().difference(DateTime.now()).inHours >=
+                -168 &&
+            film.dateDeSortie.toDate().difference(DateTime.now()).inHours <= 0)
         .toList());
   }
   // NOTE : Get new films
 
   static Stream<List<FilmModel>> fetchCurrent() {
-    CollectionReference<Map<String, dynamic>> db =
-        FirebaseFirestore.instance.collection('film');
-
     return db.snapshots().map((snap) => snap.docs
         .map((doc) => FilmModel.fromJson(doc.data()))
         .toList()
-        .where(
-            (film) =>
-            film.dateDeSortie.toDate().difference(DateTime.now()).inDays < 1)
+        .where((film) =>
+            film.dateDeSortie.toDate().difference(DateTime.now()).inHours < 1)
         .toList());
   }
   // NOTE : Get current films
 
   static Stream<List<FilmModel>> fetchFuture() {
-    CollectionReference<Map<String, dynamic>> db =
-        FirebaseFirestore.instance.collection('film');
-
     return db.snapshots().map((snap) => snap.docs
         .map((doc) => FilmModel.fromJson(doc.data()))
         .toList()
-        .where(
-            (film) =>
-            film.dateDeSortie.toDate().difference(DateTime.now()).inDays > 0)
+        .where((film) =>
+            film.dateDeSortie.toDate().difference(DateTime.now()).inHours > 0)
         .toList());
   }
   // NOTE : Get future films
 
   static Stream<List<FilmModel>> fetchLabel() {
-    CollectionReference<Map<String, dynamic>> db =
-        FirebaseFirestore.instance.collection('film');
-
     return db.snapshots().map((snap) => snap.docs
         .map((doc) => FilmModel.fromJson(doc.data()))
         .toList()
@@ -79,9 +80,6 @@ class FilmsCrud {
   // NOTE : Get films with label
 
   static Stream<List<FilmModel>> fetchByCinema(CinemaModel cinema) {
-    CollectionReference<Map<String, dynamic>> db =
-        FirebaseFirestore.instance.collection('film');
-
     return db.snapshots().map((snap) => snap.docs
         .map((doc) => FilmModel.fromJson(doc.data()))
         .toList()
@@ -91,10 +89,20 @@ class FilmsCrud {
   // NOTE : Get all films of a cinema
 
   // {} UPDATE FILMS
-  static Future commitNote(String id, int myNote) async {
-    CollectionReference<Map<String, dynamic>> db =
-        FirebaseFirestore.instance.collection('film');
+  static Future commitAll(FilmModel film) async {
+    Map<String, dynamic> newFilmJson = film.toJson(film.id);
 
+    await db
+        .doc(film.id)
+        .update(newFilmJson)
+        // ignore: avoid_print
+        .then((value) => print(film.titre + ' a été modifié'))
+        // ignore: avoid_print
+        .catchError((e) => print(e.toString()));
+  }
+  // NOTE : Update all values of film
+
+  static Future commitNote(String id, int myNote) async {
     await db
         .doc(id)
         .update({'userNote': myNote})
@@ -106,9 +114,6 @@ class FilmsCrud {
   // NOTE : Update film note
 
   static Future commitMore(String id, bool more) async {
-    CollectionReference<Map<String, dynamic>> db =
-        FirebaseFirestore.instance.collection('film');
-
     final bool newMore = !more;
 
     await db
@@ -120,4 +125,15 @@ class FilmsCrud {
         .catchError((e) => print(e.toString()));
   }
   // NOTE : Update film more
+
+  
+  // {} REMOVE FILMS
+  static Future removeById(String id) async {
+    await db
+        .doc(id)
+        .delete()
+        // ignore: avoid_print
+        .catchError((e) => print(e.toString()));
+  }
+  // NOTE : Remove a film from the database
 }
