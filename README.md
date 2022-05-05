@@ -4,10 +4,16 @@ I made this this clone of cinemas UGC app to improve my flutter and firebase ski
 
 I add an administrator interface to easily <strong>add, update and remove</strong> films or cinemas.
 
-<p>
+<p align="center">
 <img alt="Flutter" src="https://img.shields.io/badge/Flutter-02569B?style=flat-square&logo=flutter&logoColor=white" />
 <img alt="Dart" src="https://img.shields.io/badge/Dart-0175C2?style=flat-square&logo=dart&logoColor=white" />
 <img alt="Firebase" src="https://img.shields.io/badge/Firebase-D19222?style=flat-square&logo=firebase&logoColor=white" />
+</p>
+
+<p align="center">
+<img src="img/Screenshot_1.png" height="500" title="hover text">
+<img src="img/Screenshot_2.png" height="500" title="hover text">
+<img src="img/Screenshot_3.png" height="500" title="hover text">
 </p>
 
 
