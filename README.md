@@ -11,9 +11,9 @@ I add an administrator interface to easily <strong>add, update and remove</stron
 </p>
 
 <p align="center">
-<img src="img/Screenshot_1.png" height="500" title="hover text">
-<img src="img/Screenshot_2.png" height="500" title="hover text">
-<img src="img/Screenshot_3.png" height="500" title="hover text">
+<img src="screenshots/Screenshot_1.png" height="500" title="hover text">
+<img src="screenshots/Screenshot_2.png" height="500" title="hover text">
+<img src="screenshots/Screenshot_3.png" height="500" title="hover text">
 </p>
 
 
