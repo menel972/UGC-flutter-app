@@ -25,17 +25,21 @@ class FilmPosterCard extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final FilmModel film = snapshot.data!;
-              return InkWell(
+              return GestureDetector(
                 // <!> FilmDetailsView()
                 onTap: () => Navigator.pushNamed(context, FilmDetailsView.route,
                     arguments: film.id),
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    Ink.image(
-                      image: AssetImage(film.affiche),
-                      fit: BoxFit.fill,
-                      child: Container(
+                    Hero(
+                      tag: film.affiche,
+                      child: Image(
+                        image: AssetImage(film.affiche),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    Container(
                         decoration: const BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
@@ -44,7 +48,6 @@ class FilmPosterCard extends StatelessWidget {
                             ],
                             begin: Alignment.center,
                             end: Alignment.bottomCenter,
-                          ),
                         ),
                       ),
                     ),

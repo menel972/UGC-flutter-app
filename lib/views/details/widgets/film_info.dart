@@ -36,8 +36,11 @@ class FilmInfo extends StatelessWidget {
                     children: [
                       Flexible(
                         flex: 2,
-                        child: Image(
-                          image: AssetImage(film.affiche),
+                        child: Hero(
+                          tag: film.affiche,
+                          child: Image(
+                            image: AssetImage(film.affiche),
+                          ),
                         ),
                       ),
                       Flexible(
