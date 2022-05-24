@@ -1,6 +1,6 @@
 # About UGC Clone App
 
-I made this this clone of cinemas UGC app to improve my flutter and firebase skills.
+I made this clone of cinemas UGC app to improve my flutter and firebase skills.
 
 I add an administrator interface to easily <strong>add, update and remove</strong> films or cinemas.
 
